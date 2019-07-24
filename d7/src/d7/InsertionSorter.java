@@ -49,5 +49,11 @@ public abstract class InsertionSorter<E> extends Sorter<E>{
 		}
 		// termination: length == i so a[0..length) is a[0..i) which is sorted
 	}
+	
 
+
+	
 }
+
+
+
