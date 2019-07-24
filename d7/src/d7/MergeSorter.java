@@ -23,10 +23,10 @@ public abstract class MergeSorter<E> extends Sorter<E>{
 		//          start       mid        end
 		// a: [    |  sorted   |  sorted  |     ]
 		
-		merge(a, start, mid, end);
+		mergeSort(a, start, mid, end);
 	}
 	
-	private void merge(List<E> a, int start, int mid, int end) {
+	private void mergeSort(List<E> a, int start, int mid, int end) {
 		List<E> result = new ArrayList<E>();
 		
 		// invariant: result is sorted

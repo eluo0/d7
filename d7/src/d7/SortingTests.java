@@ -10,13 +10,17 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-abstract class SortingTests{
+abstract class SortingTests<E> extends SelectionSorter<E>{
 
+	public SortingTests(Comparator<E> cmp) {
+		super(cmp);
+		// TODO Auto-generated constructor stub
+	}
 	@Test
 	private Sorter<Integer> sorter() {
 		return new Sorter<Integer>(Comparator.naturalOrder());
 		
-
+	}
 	@Test
 	public void testSwap() {
 		Sorter<Integer> s = sorter();
@@ -57,13 +61,14 @@ abstract class SortingTests{
 		assertEquals(exp,a);
 	
 }
-	public void testIndexOfMin() {
+	public abstract int testIndexOfMin(){
 		Sorter<Integer> s = sorter();
 		List<Integer>    a = testCase();
 		
 		assertEquals(0, a.get(s.indexOfMin(a, 0, a.size())));
 		assertEquals(3, a.get(s.indexOfMin(a, 2, 5)));
 	}
-
+	
 	
 }
+
