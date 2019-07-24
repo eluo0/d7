@@ -2,6 +2,10 @@ package d7;
 
 import java.util.List;
 
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -21,7 +25,7 @@ public abstract class Sorter<E> {
 	}
 	
 	/** exchange a[i] and a[j] */
-	private void swap(List<E> a, int i, int j) {
+	protected void swap(List<E> a, int i, int j) {
 		E tmp = a.get(i);
 		a.set(i, a.get(j));
 		a.set(j, tmp);
@@ -32,7 +36,7 @@ public abstract class Sorter<E> {
 	 * Return < 0 if a[i] < a[j]; return = 0 if a[i] = a[j] and return
 	 * >0 if a[i] > a[j]
 	 */
-	private int compare(List<E> a, int i, int j) {
+	protected int compare(List<E> a, int i, int j) {
 		return this.cmp.compare(a.get(i), a.get(j));
 	}
 	
@@ -49,45 +53,7 @@ public abstract class Sorter<E> {
 	 *     0            length
 	 * a: [   sorted   ]
 	 */
-	public void insertionSort(List<E> a) {
-		// invariant:    0          i         length
-		//           a: [  sorted  |    ?    ]
-		
-		int i = 0;
-		// initialization: a[0..i) is empty, thus sorted.
-		
-		while (i < a.size()) {
-			i ++; // progress: i is increasing
-			
-			// know:      0            i           length
-			//        a: [  sorted  |?|     ?     ]
-			
-			// inner loop invariant:
-			//               0          j                   i        length
-			//           a: [  sorted  |?|  sorted > a[j]  |   ?    ]
-			
-			int j = i - 1;
-			// inner loop initiailization: a[j+1..i) is empty, and so is > a[j]
-			
-			while (!(j == 0 || compare(a,j-1,j) <= 0)) {
-				j--; // progress: j decreases
-				swap(a,j,j+1);
-			}
-			
-			// after inner loop, want:
-			//      0            i           length
-			//  a: [   sorted   |     ?     ]
-			//
-			// termination: if j == 0, then a[0..i) is sorted, since a[0] is smallest and
-			// everything else is sorted.
-			// if a[j-1] <= a[j] then a[0..i) is a[0..j-1, j, j+1..i) and
-			//   a[0] <= a[1] <= .. <= a[j-1] by invariant
-			//   a[j-1] <= a[j] by loop termination
-			//   a[j] < a[j+1] <= a[j+1] <= ... <= a[i-1] by invariant
-			// so a[0...i) is sorted.
-		}
-		// termination: length == i so a[0..length) is a[0..i) which is sorted
-	}
+
 	
 	////////////////////////////////////////////////////////////////////////////
 	// Selection sort //////////////////////////////////////////////////////////
@@ -251,10 +217,10 @@ public abstract class Sorter<E> {
 		}
 		
 		@Test
-		public void testInsertionSort() {
+		public void testSort() {
 			Sorter<Integer> s = sorter();
 			List<Integer>    a = testCase();
-			s.insertionSort(a);
+			s.sort(a);
 			assertEquals(testCaseSorted(), a);
 		}
 		@Test
@@ -277,13 +243,7 @@ public abstract class Sorter<E> {
 			assertEquals(exp,a);
 		}
 		
-		@Test
-		public void testMergeSort() {
-			Sorter<Integer> s = sorter();
-			List<Integer>    a = testCase();
-			s.mergeSort(a);
-			assertEquals(testCaseSorted(), a);			
-		}
+	
 		
 		@Test
 		public void testSelectionSort() {
